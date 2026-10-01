@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getError(event) {
+            console.log("Erro capturado:", {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                error: event.error
+            });
+        }
+        
+        function getPromiseError(event) {
+            console.log("Promise error capturado:", {
+                reason: event.reason,
+                promise: event.promise
+            });
+        }
+
+        window.addEventListener('error', getError);
+        window.addEventListener('unhandledrejection', getPromiseError);
+
+        async function test1() {
+            throw new Error('Test error in test1');
+        }
+
+        async function test2() {
+            let c = null;
+            let v = c.toString()
+        }
+
+        async function test3() {
+            v = 5 + i;
+        }
+
+        //Chamadas de erros propositais:
+        test1();
+        test2();
+        test3();
+        null.toString();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
